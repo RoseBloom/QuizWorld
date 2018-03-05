@@ -1,8 +1,10 @@
 import {Component} from '@angular/core'
 @Component({
     selector: 'question',
-    template: 'This is our question'
+    templateUrl:'./question.component.html'
 })
 export class QuestionComponent{
-
+    post(question){
+        console.log(question);
+    }
 }
