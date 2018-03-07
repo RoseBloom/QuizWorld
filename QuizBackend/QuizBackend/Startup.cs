@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
 
 namespace QuizBackend
 {
@@ -23,6 +25,13 @@ namespace QuizBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(option => option.AddPolicy("Cores", builder =>
+             {
+                 builder.AllowAnyOrigin()
+                 .AllowAnyMethod()
+                 .AllowAnyHeader();
+             }));
+            services.AddDbContext<QuizContext>(ops => ops.UseInMemoryDatabase("Quiz"));
             services.AddMvc();
         }
 
@@ -33,6 +42,8 @@ namespace QuizBackend
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("Cores");
 
             app.UseMvc();
         }
