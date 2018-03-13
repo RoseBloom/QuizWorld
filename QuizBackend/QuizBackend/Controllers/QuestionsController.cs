@@ -30,7 +30,7 @@ namespace QuizBackend.Controllers
         [HttpPost]
         public void Post([FromBody]Question question)
         {
-            context.Questions.Add(new Question() {Text = "Is the world Real?" });
+            context.Questions.Add(question);
             context.SaveChanges();
         }
     }
