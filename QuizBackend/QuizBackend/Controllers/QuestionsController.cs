@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QuizBackend.Models;
+
 
 namespace QuizBackend.Controllers
 {
@@ -25,10 +27,21 @@ namespace QuizBackend.Controllers
         }
         // POST api/Questions
         [HttpPost]
-        public void Post([FromBody]Question question)
+        public async Task<IActionResult> Post([FromBody]Question question)
         {
             context.Questions.Add(question);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
+            return Ok(question);
         }
+
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]Question Question)
+        {
+            context.Entry(Question).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return Ok(Question);
+        }
+
     }
 }
