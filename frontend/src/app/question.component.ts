@@ -7,7 +7,14 @@ import { ApiService } from './api.service';
 
 export class QuestionComponent{
     question = {}
+    
     constructor( private api: ApiService){}
+   
+    ngOnInit(){
+        this.api.questionSelected.subscribe(question => this.question = question)
+        console.log("we called the start upwith " + this.question)
+    }
+
     post(question){
         this.api.postQuestion(question);
     }
